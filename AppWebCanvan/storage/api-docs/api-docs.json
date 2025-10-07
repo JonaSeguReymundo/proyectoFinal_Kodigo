@@ -1,0 +1,918 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel Kanban API",
+        "description": "API para gestionar tableros Kanban con columnas y tareas",
+        "contact": {
+            "email": "admin@kanban.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "Servidor de desarrollo"
+        }
+    ],
+    "paths": {
+        "/api/boards": {
+            "get": {
+                "tags": [
+                    "Boards"
+                ],
+                "summary": "Obtener todos los tableros",
+                "description": "Retorna una lista de todos los tableros con sus columnas y tareas",
+                "operationId": "22c1b4dcc14110fc84dde21f6af5560b",
+                "responses": {
+                    "200": {
+                        "description": "Lista de tableros obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Mi Tablero"
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "example": "Descripción del tablero"
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "updated_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Boards"
+                ],
+                "summary": "Crear un nuevo tablero",
+                "description": "Crea un nuevo tablero Kanban",
+                "operationId": "475fc0adeff918edaca9ab0b788b5e2b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Nuevo Tablero"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Descripción del tablero"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tablero creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Nuevo Tablero"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "Descripción del tablero"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/boards/{id}": {
+            "get": {
+                "tags": [
+                    "Boards"
+                ],
+                "summary": "Obtener un tablero específico",
+                "description": "Retorna un tablero específico con sus columnas y tareas",
+                "operationId": "34f214deef78cf734160f16e50359c00",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tablero",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tablero obtenido exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Mi Tablero"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "Descripción del tablero"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tablero no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Boards"
+                ],
+                "summary": "Actualizar un tablero",
+                "description": "Actualiza la información de un tablero específico",
+                "operationId": "8a09dc1c0993a4ce9624565318ade1b2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tablero",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Tablero Actualizado"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Nueva descripción"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tablero actualizado exitosamente"
+                    },
+                    "404": {
+                        "description": "Tablero no encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Boards"
+                ],
+                "summary": "Eliminar un tablero",
+                "description": "Elimina un tablero específico",
+                "operationId": "77f6148a023d46049d56890821f8c822",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tablero",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Tablero eliminado exitosamente"
+                    },
+                    "404": {
+                        "description": "Tablero no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/columns": {
+            "get": {
+                "tags": [
+                    "Columns"
+                ],
+                "summary": "Obtener todas las columnas",
+                "description": "Retorna una lista de todas las columnas con sus tareas",
+                "operationId": "157541de6626c706f141358ff4712aad",
+                "responses": {
+                    "200": {
+                        "description": "Lista de columnas obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Por hacer"
+                                            },
+                                            "board_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "position": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "updated_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Columns"
+                ],
+                "summary": "Crear una nueva columna",
+                "description": "Crea una nueva columna en un tablero",
+                "operationId": "0e8d904832cab548baa6de7884e36cff",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "board_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "En progreso"
+                                    },
+                                    "board_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "position": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Columna creada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "En progreso"
+                                        },
+                                        "board_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "position": {
+                                            "type": "integer",
+                                            "example": 2
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/columns/{id}": {
+            "get": {
+                "tags": [
+                    "Columns"
+                ],
+                "summary": "Obtener una columna específica",
+                "description": "Retorna una columna específica con sus tareas",
+                "operationId": "7c2769057cc83c33264bd5656723dc4d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la columna",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Columna obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Por hacer"
+                                        },
+                                        "board_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "position": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Columna no encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Columns"
+                ],
+                "summary": "Actualizar una columna",
+                "description": "Actualiza la información de una columna específica",
+                "operationId": "7ab37e43dfc81a1dfd22bf9e145985ba",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la columna",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Completado"
+                                    },
+                                    "position": {
+                                        "type": "integer",
+                                        "example": 3
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Columna actualizada exitosamente"
+                    },
+                    "404": {
+                        "description": "Columna no encontrada"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Columns"
+                ],
+                "summary": "Eliminar una columna",
+                "description": "Elimina una columna específica",
+                "operationId": "11ae4590fc775f6a137d08724144b17b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la columna",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Columna eliminada exitosamente"
+                    },
+                    "404": {
+                        "description": "Columna no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/tasks": {
+            "get": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Obtener todas las tareas",
+                "description": "Retorna una lista de todas las tareas",
+                "operationId": "471d938a3bfaeb6fbd981d7c3e2728b0",
+                "responses": {
+                    "200": {
+                        "description": "Lista de tareas obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Implementar login"
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "example": "Crear sistema de autenticación"
+                                            },
+                                            "column_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "position": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "priority": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "low",
+                                                    "medium",
+                                                    "high"
+                                                ],
+                                                "example": "high"
+                                            },
+                                            "due_date": {
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "2025-10-15"
+                                            },
+                                            "status": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "pending",
+                                                    "in_progress",
+                                                    "completed"
+                                                ],
+                                                "example": "pending"
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "updated_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Crear una nueva tarea",
+                "description": "Crea una nueva tarea en una columna específica",
+                "operationId": "f803ebdb2300acdb7e93bbe8d0b9a2e8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "column_id"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Nueva tarea"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Descripción de la tarea"
+                                    },
+                                    "column_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "position": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "priority": {
+                                        "type": "string",
+                                        "enum": [
+                                            "low",
+                                            "medium",
+                                            "high"
+                                        ],
+                                        "example": "medium"
+                                    },
+                                    "due_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-10-15"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "pending",
+                                            "in_progress",
+                                            "completed"
+                                        ],
+                                        "example": "pending"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tarea creada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Nueva tarea"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "Descripción de la tarea"
+                                        },
+                                        "column_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "position": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "priority": {
+                                            "type": "string",
+                                            "example": "medium"
+                                        },
+                                        "due_date": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2025-10-15"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "pending"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tasks/{id}": {
+            "get": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Obtener una tarea específica",
+                "description": "Retorna una tarea específica por su ID",
+                "operationId": "90b3cd4d2d4b416dc989d2055dbed06c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la tarea",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tarea obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Implementar login"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "Crear sistema de autenticación"
+                                        },
+                                        "column_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "position": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "priority": {
+                                            "type": "string",
+                                            "example": "high"
+                                        },
+                                        "due_date": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2025-10-15"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "pending"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tarea no encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Actualizar una tarea",
+                "description": "Actualiza la información de una tarea específica",
+                "operationId": "1aaf37e74360ef4c10fadaee02ae77fb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la tarea",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Tarea actualizada"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Nueva descripción"
+                                    },
+                                    "column_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "position": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "priority": {
+                                        "type": "string",
+                                        "enum": [
+                                            "low",
+                                            "medium",
+                                            "high"
+                                        ],
+                                        "example": "high"
+                                    },
+                                    "due_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-10-20"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "pending",
+                                            "in_progress",
+                                            "completed"
+                                        ],
+                                        "example": "in_progress"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tarea actualizada exitosamente"
+                    },
+                    "404": {
+                        "description": "Tarea no encontrada"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Eliminar una tarea",
+                "description": "Elimina una tarea específica",
+                "operationId": "ad582480cd57c2a4e3b6a426943eeca5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la tarea",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Tarea eliminada exitosamente"
+                    },
+                    "404": {
+                        "description": "Tarea no encontrada"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Boards",
+            "description": "API Endpoints para gestionar tableros Kanban"
+        },
+        {
+            "name": "Columns",
+            "description": "API Endpoints para gestionar columnas de los tableros Kanban"
+        },
+        {
+            "name": "Tasks",
+            "description": "API Endpoints para gestionar tareas dentro de las columnas"
+        }
+    ]
+}
