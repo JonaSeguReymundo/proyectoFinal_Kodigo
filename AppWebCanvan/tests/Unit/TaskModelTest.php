@@ -99,4 +99,32 @@ class TaskModelTest extends TestCase
         ]);
         $this->assertEquals('En curso', $task->status);
     }
+
+    /**
+     * @test
+     */
+    public function test_status_delayed_on_due_date()
+    {
+        Carbon::setTestNow(Carbon::parse('2024-01-10'));
+        $task = new Task([
+            'avance' => 50,
+            'fecha_asignacion' => Carbon::parse('2024-01-01'),
+            'fecha_limite' => Carbon::parse('2024-01-10'),
+        ]);
+        $this->assertEquals('Retrasada', $task->status);
+    }
+
+    /**
+     * @test
+     */
+    public function test_status_at_risk_on_due_date()
+    {
+        Carbon::setTestNow(Carbon::parse('2024-01-10'));
+        $task = new Task([
+            'avance' => 90,
+            'fecha_asignacion' => Carbon::parse('2024-01-01'),
+            'fecha_limite' => Carbon::parse('2024-01-10'),
+        ]);
+        $this->assertEquals('Por vencer', $task->status);
+    }
 }

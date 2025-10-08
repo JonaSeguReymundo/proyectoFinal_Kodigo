@@ -62,16 +62,15 @@ class Task extends Model
                 return 'Completada';
             }
 
-            $missingDays = $this->missing_days;
-
-            if ($missingDays <= 0) {
+            if (now()->startOfDay()->isAfter($this->fecha_limite->startOfDay())) {
                 return 'Vencida';
             }
 
+            $missingDays = $this->missing_days;
             $totalDays = $this->total_days;
-            
+
             if ($totalDays == 0) {
-                return $missingDays > 0 ? 'En curso' : 'Vencida';
+                return $missingDays > 0 ? 'En curso' : 'Por vencer';
             }
 
             $daysPassed = $totalDays - $missingDays;
