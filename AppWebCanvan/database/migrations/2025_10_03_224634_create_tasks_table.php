@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('asignador');
             $table->string('responsable');
             $table->integer('avance')->default(0);
-            $table->enum('prioridad', ['bajo', 'medio', 'alto', 'extremo']);
+            $table->enum('prioridad', ['baja', 'medio', 'alto', 'urgente']);
             $table->timestamps();
         });
     }
