@@ -6,6 +6,7 @@ use App\Enums\TaskPriority;
 use App\Models\Column;
 use App\Models\Task;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class TaskControllerTest extends TestCase
@@ -35,38 +36,35 @@ class TaskControllerTest extends TestCase
         ], $overrides);
     }
 
-    /**
-     * @test
-     */
-    public function it_can_create_a_task_with_valid_data()
+    #[Test]
+    public function it_can_create_a_task_with_valid_data(): void
     {
         $taskData = $this->getValidTaskData();
 
         $response = $this->postJson('/api/tasks', $taskData);
 
         $response->assertStatus(201)
-            ->assertJsonFragment(['nombre' => 'Test Task']);
+                 ->assertJsonFragment(['nombre' => 'Test Task']);
 
         $this->assertDatabaseHas('tasks', ['nombre' => 'Test Task']);
     }
 
-    /**
-     * @test
-     */
-    public function it_returns_a_validation_error_when_creating_a_task_with_invalid_data()
+    #[Test]
+    public function it_returns_a_validation_error_when_creating_a_task_with_invalid_data(): void
     {
-        $taskData = $this->getValidTaskData(['nombre' => '', 'fecha_limite' => '2023-12-31']);
+        $taskData = $this->getValidTaskData([
+            'nombre' => '',
+            'fecha_limite' => '2023-12-31',
+        ]);
 
         $response = $this->postJson('/api/tasks', $taskData);
 
         $response->assertStatus(422)
-            ->assertJsonValidationErrors(['nombre', 'fecha_limite']);
+                 ->assertJsonValidationErrors(['nombre', 'fecha_limite']);
     }
 
-    /**
-     * @test
-     */
-    public function it_can_update_a_task_with_valid_data()
+    #[Test]
+    public function it_can_update_a_task_with_valid_data(): void
     {
         $task = Task::factory()->create(['column_id' => $this->column->id]);
         $updateData = $this->getValidTaskData(['nombre' => 'Updated Task Name']);
@@ -74,15 +72,16 @@ class TaskControllerTest extends TestCase
         $response = $this->putJson("/api/tasks/{$task->id}", $updateData);
 
         $response->assertStatus(200)
-            ->assertJsonFragment(['nombre' => 'Updated Task Name']);
+                 ->assertJsonFragment(['nombre' => 'Updated Task Name']);
 
-        $this->assertDatabaseHas('tasks', ['id' => $task->id, 'nombre' => 'Updated Task Name']);
+        $this->assertDatabaseHas('tasks', [
+            'id' => $task->id,
+            'nombre' => 'Updated Task Name',
+        ]);
     }
 
-    /**
-     * @test
-     */
-    public function it_returns_a_validation_error_when_updating_a_task_with_invalid_data()
+    #[Test]
+    public function it_returns_a_validation_error_when_updating_a_task_with_invalid_data(): void
     {
         $task = Task::factory()->create(['column_id' => $this->column->id]);
         $updateData = $this->getValidTaskData(['prioridad' => 'invalid-priority']);
@@ -90,13 +89,11 @@ class TaskControllerTest extends TestCase
         $response = $this->putJson("/api/tasks/{$task->id}", $updateData);
 
         $response->assertStatus(422)
-            ->assertJsonValidationErrors(['prioridad']);
+                 ->assertJsonValidationErrors(['prioridad']);
     }
 
-    /**
-     * @test
-     */
-    public function it_can_delete_a_task()
+    #[Test]
+    public function it_can_delete_a_task(): void
     {
         $task = Task::factory()->create(['column_id' => $this->column->id]);
 
