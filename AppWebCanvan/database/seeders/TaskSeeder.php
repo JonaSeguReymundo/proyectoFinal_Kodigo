@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Task;
+use App\Enums\TaskPriority;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -25,7 +26,7 @@ class TaskSeeder extends Seeder
                 'asignador' => 'Project Manager',
                 'responsable' => 'Juan Pérez',
                 'avance' => 0,
-                'prioridad' => 'alto'
+                'prioridad' => TaskPriority::ALTA->value
             ],
             [
                 'nombre' => 'Crear sistema de notificaciones',
@@ -36,7 +37,7 @@ class TaskSeeder extends Seeder
                 'asignador' => 'Tech Lead',
                 'responsable' => 'María García',
                 'avance' => 0,
-                'prioridad' => 'medio'
+                'prioridad' => TaskPriority::MEDIA->value
             ],
             
             // Por Hacer (column_id: 2)
@@ -49,7 +50,7 @@ class TaskSeeder extends Seeder
                 'asignador' => 'Architect',
                 'responsable' => 'Carlos López',
                 'avance' => 25,
-                'prioridad' => 'alto'
+                'prioridad' => TaskPriority::ALTA->value
             ],
             [
                 'nombre' => 'Configurar API REST',
@@ -60,7 +61,7 @@ class TaskSeeder extends Seeder
                 'asignador' => 'Tech Lead',
                 'responsable' => 'Ana Martínez',
                 'avance' => 10,
-                'prioridad' => 'alto'
+                'prioridad' => TaskPriority::ALTA->value
             ],
             
             // En Progreso (column_id: 3)
@@ -73,7 +74,7 @@ class TaskSeeder extends Seeder
                 'asignador' => 'Frontend Lead',
                 'responsable' => 'Pedro Sánchez',
                 'avance' => 60,
-                'prioridad' => 'alto'
+                'prioridad' => TaskPriority::ALTA->value
             ],
             [
                 'nombre' => 'Integrar Swagger/OpenAPI',
@@ -84,7 +85,7 @@ class TaskSeeder extends Seeder
                 'asignador' => 'Developer',
                 'responsable' => 'Luis Rodríguez',
                 'avance' => 80,
-                'prioridad' => 'medio'
+                'prioridad' => TaskPriority::MEDIA->value
             ],
             
             // En Revisión (column_id: 4)
@@ -97,7 +98,7 @@ class TaskSeeder extends Seeder
                 'asignador' => 'DevOps',
                 'responsable' => 'Sofia Hernández',
                 'avance' => 90,
-                'prioridad' => 'medio'
+                'prioridad' => TaskPriority::MEDIA->value
             ],
             
             // Terminado (column_id: 5)
@@ -110,7 +111,7 @@ class TaskSeeder extends Seeder
                 'asignador' => 'Tech Lead',
                 'responsable' => 'Roberto Díaz',
                 'avance' => 100,
-                'prioridad' => 'bajo'
+                'prioridad' => TaskPriority::BAJA->value
             ]
         ];
 
@@ -126,7 +127,7 @@ class TaskSeeder extends Seeder
                 'asignador' => 'Marketing Manager',
                 'responsable' => 'Laura Fernández',
                 'avance' => 0,
-                'prioridad' => 'medio'
+                'prioridad' => TaskPriority::MEDIA->value
             ],
             
             // Planificación (column_id: 7)
@@ -139,7 +140,7 @@ class TaskSeeder extends Seeder
                 'asignador' => 'Strategy Lead',
                 'responsable' => 'David Torres',
                 'avance' => 30,
-                'prioridad' => 'alto'
+                'prioridad' => TaskPriority::ALTA->value
             ],
             
             // Ejecución (column_id: 8)
@@ -152,7 +153,7 @@ class TaskSeeder extends Seeder
                 'asignador' => 'Creative Director',
                 'responsable' => 'Carmen Ruiz',
                 'avance' => 70,
-                'prioridad' => 'alto'
+                'prioridad' => TaskPriority::URGENTE->value
             ],
             
             // Publicado (column_id: 9)
@@ -165,7 +166,7 @@ class TaskSeeder extends Seeder
                 'asignador' => 'Digital Manager',
                 'responsable' => 'Miguel Castro',
                 'avance' => 100,
-                'prioridad' => 'medio'
+                'prioridad' => TaskPriority::MEDIA->value
             ]
         ];
 
@@ -181,7 +182,7 @@ class TaskSeeder extends Seeder
                 'asignador' => 'HR Manager',
                 'responsable' => 'Elena Morales',
                 'avance' => 15,
-                'prioridad' => 'alto'
+                'prioridad' => TaskPriority::URGENTE->value
             ],
             
             // Entrevistas (column_id: 11)
@@ -194,7 +195,7 @@ class TaskSeeder extends Seeder
                 'asignador' => 'Design Lead',
                 'responsable' => 'Jorge Vega',
                 'avance' => 50,
-                'prioridad' => 'medio'
+                'prioridad' => TaskPriority::MEDIA->value
             ],
             
             // Capacitación (column_id: 12)
@@ -207,7 +208,7 @@ class TaskSeeder extends Seeder
                 'asignador' => 'Tech Lead',
                 'responsable' => 'Patricia Jiménez',
                 'avance' => 40,
-                'prioridad' => 'medio'
+                'prioridad' => TaskPriority::MEDIA->value
             ],
             
             // Completado (column_id: 13)
@@ -220,7 +221,7 @@ class TaskSeeder extends Seeder
                 'asignador' => 'HR Coordinator',
                 'responsable' => 'Andrea Silva',
                 'avance' => 100,
-                'prioridad' => 'bajo'
+                'prioridad' => TaskPriority::BAJA->value
             ]
         ];
 

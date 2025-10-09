@@ -27,13 +27,18 @@ class TaskController extends Controller
      *             type="array",
      *             @OA\Items(
      *                 @OA\Property(property="id", type="integer", example=1),
-     *                 @OA\Property(property="title", type="string", example="Implementar login"),
-     *                 @OA\Property(property="description", type="string", example="Crear sistema de autenticación"),
+     *                 @OA\Property(property="nombre", type="string", example="Implementar login"),
+     *                 @OA\Property(property="descripcion", type="string", example="Crear sistema de autenticación"),
      *                 @OA\Property(property="column_id", type="integer", example=1),
-     *                 @OA\Property(property="position", type="integer", example=1),
-     *                 @OA\Property(property="priority", type="string", example="high", enum={"low", "medium", "high"}),
-     *                 @OA\Property(property="due_date", type="string", format="date", example="2025-10-15"),
-     *                 @OA\Property(property="status", type="string", example="pending", enum={"pending", "in_progress", "completed"}),
+     *                 @OA\Property(property="fecha_asignacion", type="string", format="date", example="2025-10-05"),
+     *                 @OA\Property(property="fecha_limite", type="string", format="date", example="2025-10-15"),
+     *                 @OA\Property(property="asignador", type="string", example="Tech Lead"),
+     *                 @OA\Property(property="responsable", type="string", example="Juan Pérez"),
+     *                 @OA\Property(property="avance", type="integer", example=75, minimum=0, maximum=100),
+     *                 @OA\Property(property="prioridad", type="string", example="alta", enum={"baja", "media", "alta", "urgente"}),
+     *                 @OA\Property(property="total_days", type="integer", example=10, description="Días totales para completar la tarea"),
+     *                 @OA\Property(property="missing_days", type="integer", example=3, description="Días restantes para la fecha límite"),
+     *                 @OA\Property(property="status", type="string", example="En progreso", description="Estado calculado basado en fechas y avance"),
      *                 @OA\Property(property="created_at", type="string", format="date-time"),
      *                 @OA\Property(property="updated_at", type="string", format="date-time")
      *             )
@@ -55,14 +60,16 @@ class TaskController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             required={"title", "column_id"},
-     *             @OA\Property(property="title", type="string", example="Nueva tarea"),
-     *             @OA\Property(property="description", type="string", example="Descripción de la tarea"),
+     *             required={"nombre", "column_id", "fecha_asignacion", "fecha_limite", "asignador", "responsable", "prioridad"},
+     *             @OA\Property(property="nombre", type="string", example="Nueva tarea", maxLength=255),
+     *             @OA\Property(property="descripcion", type="string", example="Descripción detallada de la tarea"),
      *             @OA\Property(property="column_id", type="integer", example=1),
-     *             @OA\Property(property="position", type="integer", example=1),
-     *             @OA\Property(property="priority", type="string", example="medium", enum={"low", "medium", "high"}),
-     *             @OA\Property(property="due_date", type="string", format="date", example="2025-10-15"),
-     *             @OA\Property(property="status", type="string", example="pending", enum={"pending", "in_progress", "completed"})
+     *             @OA\Property(property="fecha_asignacion", type="string", format="date", example="2025-10-05"),
+     *             @OA\Property(property="fecha_limite", type="string", format="date", example="2025-10-15"),
+     *             @OA\Property(property="asignador", type="string", example="Tech Lead", maxLength=255),
+     *             @OA\Property(property="responsable", type="string", example="Juan Pérez", maxLength=255),
+     *             @OA\Property(property="avance", type="integer", example=0, minimum=0, maximum=100),
+     *             @OA\Property(property="prioridad", type="string", example="media", enum={"baja", "media", "alta", "urgente"})
      *         )
      *     ),
      *     @OA\Response(
@@ -70,15 +77,31 @@ class TaskController extends Controller
      *         description="Tarea creada exitosamente",
      *         @OA\JsonContent(
      *             @OA\Property(property="id", type="integer", example=1),
-     *             @OA\Property(property="title", type="string", example="Nueva tarea"),
-     *             @OA\Property(property="description", type="string", example="Descripción de la tarea"),
+     *             @OA\Property(property="nombre", type="string", example="Nueva tarea"),
+     *             @OA\Property(property="descripcion", type="string", example="Descripción de la tarea"),
      *             @OA\Property(property="column_id", type="integer", example=1),
-     *             @OA\Property(property="position", type="integer", example=1),
-     *             @OA\Property(property="priority", type="string", example="medium"),
-     *             @OA\Property(property="due_date", type="string", format="date", example="2025-10-15"),
-     *             @OA\Property(property="status", type="string", example="pending"),
+     *             @OA\Property(property="fecha_asignacion", type="string", format="date", example="2025-10-05"),
+     *             @OA\Property(property="fecha_limite", type="string", format="date", example="2025-10-15"),
+     *             @OA\Property(property="asignador", type="string", example="Tech Lead"),
+     *             @OA\Property(property="responsable", type="string", example="Juan Pérez"),
+     *             @OA\Property(property="avance", type="integer", example=0),
+     *             @OA\Property(property="prioridad", type="string", example="media"),
+     *             @OA\Property(property="total_days", type="integer", example=10),
+     *             @OA\Property(property="missing_days", type="integer", example=10),
+     *             @OA\Property(property="status", type="string", example="Pendiente"),
      *             @OA\Property(property="created_at", type="string", format="date-time"),
      *             @OA\Property(property="updated_at", type="string", format="date-time")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Errores de validación",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="The given data was invalid."),
+     *             @OA\Property(property="errors", type="object",
+     *                 @OA\Property(property="nombre", type="array", @OA\Items(type="string", example="El campo nombre es obligatorio.")),
+     *                 @OA\Property(property="prioridad", type="array", @OA\Items(type="string", example="La prioridad seleccionada es inválida."))
+     *             )
      *         )
      *     )
      * )
@@ -106,13 +129,18 @@ class TaskController extends Controller
      *         description="Tarea obtenida exitosamente",
      *         @OA\JsonContent(
      *             @OA\Property(property="id", type="integer", example=1),
-     *             @OA\Property(property="title", type="string", example="Implementar login"),
-     *             @OA\Property(property="description", type="string", example="Crear sistema de autenticación"),
+     *             @OA\Property(property="nombre", type="string", example="Implementar login"),
+     *             @OA\Property(property="descripcion", type="string", example="Crear sistema de autenticación"),
      *             @OA\Property(property="column_id", type="integer", example=1),
-     *             @OA\Property(property="position", type="integer", example=1),
-     *             @OA\Property(property="priority", type="string", example="high"),
-     *             @OA\Property(property="due_date", type="string", format="date", example="2025-10-15"),
-     *             @OA\Property(property="status", type="string", example="pending"),
+     *             @OA\Property(property="fecha_asignacion", type="string", format="date", example="2025-10-05"),
+     *             @OA\Property(property="fecha_limite", type="string", format="date", example="2025-10-15"),
+     *             @OA\Property(property="asignador", type="string", example="Tech Lead"),
+     *             @OA\Property(property="responsable", type="string", example="Juan Pérez"),
+     *             @OA\Property(property="avance", type="integer", example=75),
+     *             @OA\Property(property="prioridad", type="string", example="alta"),
+     *             @OA\Property(property="total_days", type="integer", example=10),
+     *             @OA\Property(property="missing_days", type="integer", example=3),
+     *             @OA\Property(property="status", type="string", example="En progreso"),
      *             @OA\Property(property="created_at", type="string", format="date-time"),
      *             @OA\Property(property="updated_at", type="string", format="date-time")
      *         )
@@ -144,13 +172,15 @@ class TaskController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="title", type="string", example="Tarea actualizada"),
-     *             @OA\Property(property="description", type="string", example="Nueva descripción"),
+     *             @OA\Property(property="nombre", type="string", example="Tarea actualizada"),
+     *             @OA\Property(property="descripcion", type="string", example="Nueva descripción"),
      *             @OA\Property(property="column_id", type="integer", example=2),
-     *             @OA\Property(property="position", type="integer", example=2),
-     *             @OA\Property(property="priority", type="string", example="high", enum={"low", "medium", "high"}),
-     *             @OA\Property(property="due_date", type="string", format="date", example="2025-10-20"),
-     *             @OA\Property(property="status", type="string", example="in_progress", enum={"pending", "in_progress", "completed"})
+     *             @OA\Property(property="fecha_asignacion", type="string", format="date", example="2025-10-05"),
+     *             @OA\Property(property="fecha_limite", type="string", format="date", example="2025-10-20"),
+     *             @OA\Property(property="asignador", type="string", example="Project Manager"),
+     *             @OA\Property(property="responsable", type="string", example="María García"),
+     *             @OA\Property(property="avance", type="integer", example=50),
+     *             @OA\Property(property="prioridad", type="string", example="alta", enum={"baja", "media", "alta", "urgente"})
      *         )
      *     ),
      *     @OA\Response(

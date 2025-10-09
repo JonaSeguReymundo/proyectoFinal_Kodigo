@@ -36,13 +36,13 @@
                                                 "type": "integer",
                                                 "example": 1
                                             },
-                                            "name": {
+                                            "nombre": {
                                                 "type": "string",
-                                                "example": "Mi Tablero"
+                                                "example": "Desarrollo Web Laravel"
                                             },
-                                            "description": {
+                                            "descripcion": {
                                                 "type": "string",
-                                                "example": "Descripción del tablero"
+                                                "example": "Proyecto de desarrollo de aplicación web con Laravel"
                                             },
                                             "created_at": {
                                                 "type": "string",
@@ -51,6 +51,62 @@
                                             "updated_at": {
                                                 "type": "string",
                                                 "format": "date-time"
+                                            },
+                                            "columns": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "board_id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "titulo": {
+                                                            "type": "string",
+                                                            "example": "Backlog"
+                                                        },
+                                                        "color": {
+                                                            "type": "string",
+                                                            "example": "#FF6B6B"
+                                                        },
+                                                        "posicion": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "tasks": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "nombre": {
+                                                                        "type": "string",
+                                                                        "example": "Configurar autenticación"
+                                                                    },
+                                                                    "prioridad": {
+                                                                        "type": "string",
+                                                                        "example": "alta"
+                                                                    },
+                                                                    "avance": {
+                                                                        "type": "integer",
+                                                                        "example": 75
+                                                                    },
+                                                                    "status": {
+                                                                        "type": "string",
+                                                                        "example": "En curso"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
                                             }
                                         },
                                         "type": "object"
@@ -74,16 +130,17 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "name"
+                                    "nombre"
                                 ],
                                 "properties": {
-                                    "name": {
+                                    "nombre": {
                                         "type": "string",
-                                        "example": "Nuevo Tablero"
+                                        "maxLength": 255,
+                                        "example": "Nuevo Tablero Kanban"
                                     },
-                                    "description": {
+                                    "descripcion": {
                                         "type": "string",
-                                        "example": "Descripción del tablero"
+                                        "example": "Descripción detallada del tablero de trabajo"
                                     }
                                 },
                                 "type": "object"
@@ -102,13 +159,13 @@
                                             "type": "integer",
                                             "example": 1
                                         },
-                                        "name": {
+                                        "nombre": {
                                             "type": "string",
-                                            "example": "Nuevo Tablero"
+                                            "example": "Nuevo Tablero Kanban"
                                         },
-                                        "description": {
+                                        "descripcion": {
                                             "type": "string",
-                                            "example": "Descripción del tablero"
+                                            "example": "Descripción detallada del tablero"
                                         },
                                         "created_at": {
                                             "type": "string",
@@ -157,13 +214,13 @@
                                             "type": "integer",
                                             "example": 1
                                         },
-                                        "name": {
+                                        "nombre": {
                                             "type": "string",
-                                            "example": "Mi Tablero"
+                                            "example": "Desarrollo Web Laravel"
                                         },
-                                        "description": {
+                                        "descripcion": {
                                             "type": "string",
-                                            "example": "Descripción del tablero"
+                                            "example": "Proyecto de desarrollo de aplicación web con Laravel"
                                         },
                                         "created_at": {
                                             "type": "string",
@@ -172,6 +229,96 @@
                                         "updated_at": {
                                             "type": "string",
                                             "format": "date-time"
+                                        },
+                                        "columns": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "board_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "titulo": {
+                                                        "type": "string",
+                                                        "example": "Backlog"
+                                                    },
+                                                    "color": {
+                                                        "type": "string",
+                                                        "example": "#FF6B6B"
+                                                    },
+                                                    "posicion": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "tasks": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "column_id": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "nombre": {
+                                                                    "type": "string",
+                                                                    "example": "Configurar autenticación"
+                                                                },
+                                                                "descripcion": {
+                                                                    "type": "string",
+                                                                    "example": "Implementar sistema completo de login y registro"
+                                                                },
+                                                                "fecha_asignacion": {
+                                                                    "type": "string",
+                                                                    "format": "date",
+                                                                    "example": "2025-10-07"
+                                                                },
+                                                                "fecha_limite": {
+                                                                    "type": "string",
+                                                                    "format": "date",
+                                                                    "example": "2025-10-15"
+                                                                },
+                                                                "asignador": {
+                                                                    "type": "string",
+                                                                    "example": "Project Manager"
+                                                                },
+                                                                "responsable": {
+                                                                    "type": "string",
+                                                                    "example": "Juan Pérez"
+                                                                },
+                                                                "avance": {
+                                                                    "type": "integer",
+                                                                    "example": 75
+                                                                },
+                                                                "prioridad": {
+                                                                    "type": "string",
+                                                                    "example": "alta"
+                                                                },
+                                                                "total_days": {
+                                                                    "type": "integer",
+                                                                    "example": 8
+                                                                },
+                                                                "missing_days": {
+                                                                    "type": "integer",
+                                                                    "example": 3
+                                                                },
+                                                                "status": {
+                                                                    "type": "string",
+                                                                    "example": "En curso"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -208,13 +355,14 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "name": {
+                                    "nombre": {
                                         "type": "string",
+                                        "maxLength": 255,
                                         "example": "Tablero Actualizado"
                                     },
-                                    "description": {
+                                    "descripcion": {
                                         "type": "string",
-                                        "example": "Nueva descripción"
+                                        "example": "Nueva descripción detallada del tablero"
                                     }
                                 },
                                 "type": "object"
@@ -280,15 +428,19 @@
                                                 "type": "integer",
                                                 "example": 1
                                             },
-                                            "name": {
-                                                "type": "string",
-                                                "example": "Por hacer"
-                                            },
                                             "board_id": {
                                                 "type": "integer",
                                                 "example": 1
                                             },
-                                            "position": {
+                                            "titulo": {
+                                                "type": "string",
+                                                "example": "Backlog"
+                                            },
+                                            "color": {
+                                                "type": "string",
+                                                "example": "#FF6B6B"
+                                            },
+                                            "posicion": {
                                                 "type": "integer",
                                                 "example": 1
                                             },
@@ -299,6 +451,34 @@
                                             "updated_at": {
                                                 "type": "string",
                                                 "format": "date-time"
+                                            },
+                                            "tasks": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "nombre": {
+                                                            "type": "string",
+                                                            "example": "Configurar autenticación"
+                                                        },
+                                                        "prioridad": {
+                                                            "type": "string",
+                                                            "example": "alta"
+                                                        },
+                                                        "avance": {
+                                                            "type": "integer",
+                                                            "example": 75
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "example": "En curso"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
                                             }
                                         },
                                         "type": "object"
@@ -322,19 +502,24 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "name",
+                                    "titulo",
                                     "board_id"
                                 ],
                                 "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "En progreso"
-                                    },
                                     "board_id": {
                                         "type": "integer",
                                         "example": 1
                                     },
-                                    "position": {
+                                    "titulo": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "En Progreso"
+                                    },
+                                    "color": {
+                                        "type": "string",
+                                        "example": "#4ECDC4"
+                                    },
+                                    "posicion": {
                                         "type": "integer",
                                         "example": 2
                                     }
@@ -355,15 +540,19 @@
                                             "type": "integer",
                                             "example": 1
                                         },
-                                        "name": {
-                                            "type": "string",
-                                            "example": "En progreso"
-                                        },
                                         "board_id": {
                                             "type": "integer",
                                             "example": 1
                                         },
-                                        "position": {
+                                        "titulo": {
+                                            "type": "string",
+                                            "example": "En Progreso"
+                                        },
+                                        "color": {
+                                            "type": "string",
+                                            "example": "#4ECDC4"
+                                        },
+                                        "posicion": {
                                             "type": "integer",
                                             "example": 2
                                         },
@@ -414,15 +603,19 @@
                                             "type": "integer",
                                             "example": 1
                                         },
-                                        "name": {
-                                            "type": "string",
-                                            "example": "Por hacer"
-                                        },
                                         "board_id": {
                                             "type": "integer",
                                             "example": 1
                                         },
-                                        "position": {
+                                        "titulo": {
+                                            "type": "string",
+                                            "example": "Backlog"
+                                        },
+                                        "color": {
+                                            "type": "string",
+                                            "example": "#FF6B6B"
+                                        },
+                                        "posicion": {
                                             "type": "integer",
                                             "example": 1
                                         },
@@ -433,6 +626,68 @@
                                         "updated_at": {
                                             "type": "string",
                                             "format": "date-time"
+                                        },
+                                        "tasks": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "column_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "nombre": {
+                                                        "type": "string",
+                                                        "example": "Configurar autenticación"
+                                                    },
+                                                    "descripcion": {
+                                                        "type": "string",
+                                                        "example": "Implementar sistema completo de login"
+                                                    },
+                                                    "fecha_asignacion": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2025-10-07"
+                                                    },
+                                                    "fecha_limite": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2025-10-15"
+                                                    },
+                                                    "asignador": {
+                                                        "type": "string",
+                                                        "example": "Project Manager"
+                                                    },
+                                                    "responsable": {
+                                                        "type": "string",
+                                                        "example": "Juan Pérez"
+                                                    },
+                                                    "avance": {
+                                                        "type": "integer",
+                                                        "example": 75
+                                                    },
+                                                    "prioridad": {
+                                                        "type": "string",
+                                                        "example": "alta"
+                                                    },
+                                                    "total_days": {
+                                                        "type": "integer",
+                                                        "example": 8
+                                                    },
+                                                    "missing_days": {
+                                                        "type": "integer",
+                                                        "example": 3
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "En curso"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -469,11 +724,16 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "name": {
+                                    "titulo": {
                                         "type": "string",
+                                        "maxLength": 255,
                                         "example": "Completado"
                                     },
-                                    "position": {
+                                    "color": {
+                                        "type": "string",
+                                        "example": "#45B7D1"
+                                    },
+                                    "posicion": {
                                         "type": "integer",
                                         "example": 3
                                     }
@@ -541,11 +801,11 @@
                                                 "type": "integer",
                                                 "example": 1
                                             },
-                                            "title": {
+                                            "nombre": {
                                                 "type": "string",
                                                 "example": "Implementar login"
                                             },
-                                            "description": {
+                                            "descripcion": {
                                                 "type": "string",
                                                 "example": "Crear sistema de autenticación"
                                             },
@@ -553,32 +813,54 @@
                                                 "type": "integer",
                                                 "example": 1
                                             },
-                                            "position": {
-                                                "type": "integer",
-                                                "example": 1
-                                            },
-                                            "priority": {
+                                            "fecha_asignacion": {
                                                 "type": "string",
-                                                "enum": [
-                                                    "low",
-                                                    "medium",
-                                                    "high"
-                                                ],
-                                                "example": "high"
+                                                "format": "date",
+                                                "example": "2025-10-05"
                                             },
-                                            "due_date": {
+                                            "fecha_limite": {
                                                 "type": "string",
                                                 "format": "date",
                                                 "example": "2025-10-15"
                                             },
-                                            "status": {
+                                            "asignador": {
+                                                "type": "string",
+                                                "example": "Tech Lead"
+                                            },
+                                            "responsable": {
+                                                "type": "string",
+                                                "example": "Juan Pérez"
+                                            },
+                                            "avance": {
+                                                "type": "integer",
+                                                "maximum": 100,
+                                                "minimum": 0,
+                                                "example": 75
+                                            },
+                                            "prioridad": {
                                                 "type": "string",
                                                 "enum": [
-                                                    "pending",
-                                                    "in_progress",
-                                                    "completed"
+                                                    "baja",
+                                                    "media",
+                                                    "alta",
+                                                    "urgente"
                                                 ],
-                                                "example": "pending"
+                                                "example": "alta"
+                                            },
+                                            "total_days": {
+                                                "description": "Días totales para completar la tarea",
+                                                "type": "integer",
+                                                "example": 10
+                                            },
+                                            "missing_days": {
+                                                "description": "Días restantes para la fecha límite",
+                                                "type": "integer",
+                                                "example": 3
+                                            },
+                                            "status": {
+                                                "description": "Estado calculado basado en fechas y avance",
+                                                "type": "string",
+                                                "example": "En progreso"
                                             },
                                             "created_at": {
                                                 "type": "string",
@@ -610,48 +892,63 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "title",
-                                    "column_id"
+                                    "nombre",
+                                    "column_id",
+                                    "fecha_asignacion",
+                                    "fecha_limite",
+                                    "asignador",
+                                    "responsable",
+                                    "prioridad"
                                 ],
                                 "properties": {
-                                    "title": {
+                                    "nombre": {
                                         "type": "string",
+                                        "maxLength": 255,
                                         "example": "Nueva tarea"
                                     },
-                                    "description": {
+                                    "descripcion": {
                                         "type": "string",
-                                        "example": "Descripción de la tarea"
+                                        "example": "Descripción detallada de la tarea"
                                     },
                                     "column_id": {
                                         "type": "integer",
                                         "example": 1
                                     },
-                                    "position": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "priority": {
+                                    "fecha_asignacion": {
                                         "type": "string",
-                                        "enum": [
-                                            "low",
-                                            "medium",
-                                            "high"
-                                        ],
-                                        "example": "medium"
+                                        "format": "date",
+                                        "example": "2025-10-05"
                                     },
-                                    "due_date": {
+                                    "fecha_limite": {
                                         "type": "string",
                                         "format": "date",
                                         "example": "2025-10-15"
                                     },
-                                    "status": {
+                                    "asignador": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Tech Lead"
+                                    },
+                                    "responsable": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Juan Pérez"
+                                    },
+                                    "avance": {
+                                        "type": "integer",
+                                        "maximum": 100,
+                                        "minimum": 0,
+                                        "example": 0
+                                    },
+                                    "prioridad": {
                                         "type": "string",
                                         "enum": [
-                                            "pending",
-                                            "in_progress",
-                                            "completed"
+                                            "baja",
+                                            "media",
+                                            "alta",
+                                            "urgente"
                                         ],
-                                        "example": "pending"
+                                        "example": "media"
                                     }
                                 },
                                 "type": "object"
@@ -670,11 +967,11 @@
                                             "type": "integer",
                                             "example": 1
                                         },
-                                        "title": {
+                                        "nombre": {
                                             "type": "string",
                                             "example": "Nueva tarea"
                                         },
-                                        "description": {
+                                        "descripcion": {
                                             "type": "string",
                                             "example": "Descripción de la tarea"
                                         },
@@ -682,22 +979,43 @@
                                             "type": "integer",
                                             "example": 1
                                         },
-                                        "position": {
-                                            "type": "integer",
-                                            "example": 1
-                                        },
-                                        "priority": {
+                                        "fecha_asignacion": {
                                             "type": "string",
-                                            "example": "medium"
+                                            "format": "date",
+                                            "example": "2025-10-05"
                                         },
-                                        "due_date": {
+                                        "fecha_limite": {
                                             "type": "string",
                                             "format": "date",
                                             "example": "2025-10-15"
                                         },
+                                        "asignador": {
+                                            "type": "string",
+                                            "example": "Tech Lead"
+                                        },
+                                        "responsable": {
+                                            "type": "string",
+                                            "example": "Juan Pérez"
+                                        },
+                                        "avance": {
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "prioridad": {
+                                            "type": "string",
+                                            "example": "media"
+                                        },
+                                        "total_days": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "missing_days": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
                                         "status": {
                                             "type": "string",
-                                            "example": "pending"
+                                            "example": "Pendiente"
                                         },
                                         "created_at": {
                                             "type": "string",
@@ -706,6 +1024,41 @@
                                         "updated_at": {
                                             "type": "string",
                                             "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Errores de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "nombre": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "El campo nombre es obligatorio."
+                                                    }
+                                                },
+                                                "prioridad": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "La prioridad seleccionada es inválida."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -746,11 +1099,11 @@
                                             "type": "integer",
                                             "example": 1
                                         },
-                                        "title": {
+                                        "nombre": {
                                             "type": "string",
                                             "example": "Implementar login"
                                         },
-                                        "description": {
+                                        "descripcion": {
                                             "type": "string",
                                             "example": "Crear sistema de autenticación"
                                         },
@@ -758,22 +1111,43 @@
                                             "type": "integer",
                                             "example": 1
                                         },
-                                        "position": {
-                                            "type": "integer",
-                                            "example": 1
-                                        },
-                                        "priority": {
+                                        "fecha_asignacion": {
                                             "type": "string",
-                                            "example": "high"
+                                            "format": "date",
+                                            "example": "2025-10-05"
                                         },
-                                        "due_date": {
+                                        "fecha_limite": {
                                             "type": "string",
                                             "format": "date",
                                             "example": "2025-10-15"
                                         },
+                                        "asignador": {
+                                            "type": "string",
+                                            "example": "Tech Lead"
+                                        },
+                                        "responsable": {
+                                            "type": "string",
+                                            "example": "Juan Pérez"
+                                        },
+                                        "avance": {
+                                            "type": "integer",
+                                            "example": 75
+                                        },
+                                        "prioridad": {
+                                            "type": "string",
+                                            "example": "alta"
+                                        },
+                                        "total_days": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "missing_days": {
+                                            "type": "integer",
+                                            "example": 3
+                                        },
                                         "status": {
                                             "type": "string",
-                                            "example": "pending"
+                                            "example": "En progreso"
                                         },
                                         "created_at": {
                                             "type": "string",
@@ -818,11 +1192,11 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "title": {
+                                    "nombre": {
                                         "type": "string",
                                         "example": "Tarea actualizada"
                                     },
-                                    "description": {
+                                    "descripcion": {
                                         "type": "string",
                                         "example": "Nueva descripción"
                                     },
@@ -830,32 +1204,37 @@
                                         "type": "integer",
                                         "example": 2
                                     },
-                                    "position": {
-                                        "type": "integer",
-                                        "example": 2
-                                    },
-                                    "priority": {
+                                    "fecha_asignacion": {
                                         "type": "string",
-                                        "enum": [
-                                            "low",
-                                            "medium",
-                                            "high"
-                                        ],
-                                        "example": "high"
+                                        "format": "date",
+                                        "example": "2025-10-05"
                                     },
-                                    "due_date": {
+                                    "fecha_limite": {
                                         "type": "string",
                                         "format": "date",
                                         "example": "2025-10-20"
                                     },
-                                    "status": {
+                                    "asignador": {
+                                        "type": "string",
+                                        "example": "Project Manager"
+                                    },
+                                    "responsable": {
+                                        "type": "string",
+                                        "example": "María García"
+                                    },
+                                    "avance": {
+                                        "type": "integer",
+                                        "example": 50
+                                    },
+                                    "prioridad": {
                                         "type": "string",
                                         "enum": [
-                                            "pending",
-                                            "in_progress",
-                                            "completed"
+                                            "baja",
+                                            "media",
+                                            "alta",
+                                            "urgente"
                                         ],
-                                        "example": "in_progress"
+                                        "example": "alta"
                                     }
                                 },
                                 "type": "object"
